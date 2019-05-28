@@ -1,8 +1,8 @@
-Fig 7. A plot of the RHS of eq 17. m0- (analitically) is m- at kc-  (found in Fig4 caption) (see 1st paragraph of sec III.A). <m0-(N)> is an average of m obtained at N nodes and kc- (found in Fig4 caption). 
+Fig 7. A plot of the LHS of eq 17. m0- (analitically) is m- at kc-  (found in Fig4 caption) (see 1st paragraph of sec III.A). <m0-(N)> is an average of m obtained at N nodes and kc- (found in Fig4 caption). 
 
 Chi is the fluctuation parameter N(<m_d^2> - <m_d>^2)
 
-Fig 8. Solve Eq 16 and find kc- so that F(m-(kc-), rho0)=0. Then get, m numerically at that kc- (note that there will be m values corresponding to md and mu, we must identify them). With this, we can compute the fluctuation parameter Chi.
+Fig 8. Solve Eq 16 and find kc- so that F(m^-(kc-), rho0)=0. Then get, m numerically at that kc- (note that there will be m values corresponding to md and mu, we must identify them). With this, we can compute the fluctuation parameter Chi.
 
 Fig 12. All data is given. Use rho critical and kappa critical.
 
