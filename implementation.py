@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from graph_tool.all import *
 import numpy as np
 from pathos.multiprocessing import ProcessingPool as Pool
@@ -81,10 +84,10 @@ def worker_function(num_ensamble, N):
     results = []
     for kappa in kappa_range:
         results.append(swir(N, 8, 2e-3, kappa, kappa, 0.5))
-    with open('./results/{0}_{1}.p'.format(num_ensamble, N), "wb") as f:
+    with open('./results/{0}_{1}_rho_sub_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 1000
+ensambles = 10000
 with Pool(64) as pool:
     results = list(tqdm.tqdm(pool.imap(worker_function, range(ensambles), (N for n in range(ensambles))),
                                        total=ensambles))
