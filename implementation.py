@@ -71,7 +71,7 @@ def swir(n, z, rho0, kappa, mu, eta):
         # actualiza la lista de los nuevos infectados para el paso de tiempo n+1
         I = [s for sublist in new_infected_n for s in sublist]
         np.random.shuffle(I)
-    return estado.get_array()
+    return np.array(estado.get_array(), dtype=np.uint8)
 
 
 
