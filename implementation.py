@@ -75,7 +75,7 @@ def swir(n, z, rho0, kappa, mu, eta):
 
 
 
-N = 10000
+N = 100000
 def worker_function(num_ensamble, N):
     kappa_range = (np.linspace(-1, 1, 20))**3
     max_new = 0.115+0.003
