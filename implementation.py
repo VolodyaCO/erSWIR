@@ -78,13 +78,13 @@ def swir(n, z, rho0, kappa, mu, eta):
 N = 1000000
 def worker_function(num_ensamble, N):
     kappa_range = (np.linspace(-1, 1, 20))**3
-    max_new = 0.115+0.003
-    min_new = 0.115-0.003
+    max_new = 0.108021+0.003
+    min_new = 0.108021-0.003
     kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
     results = []
     for kappa in kappa_range:
-        results.append(swir(N, 8, 2e-3, kappa, kappa, 0.5))
-    with open('./results/{0}_{1}_rho_sub_critical.p'.format(num_ensamble, N), "wb") as f:
+        results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5))
+    with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(results, f)
 
 ensambles = 1000
