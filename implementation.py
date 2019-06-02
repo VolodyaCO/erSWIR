@@ -75,7 +75,7 @@ def swir(n, z, rho0, kappa, mu, eta):
 
 
 
-N = 1000000
+N = 300000
 def worker_function(num_ensamble, N):
     kappa_range = (np.linspace(-1, 1, 20))**3
     max_new = 0.108021+0.003
@@ -87,7 +87,7 @@ def worker_function(num_ensamble, N):
     with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 1000
+ensambles = 10000
 with Pool(64) as pool:
     results = list(tqdm.tqdm(pool.imap(worker_function, range(ensambles), (N for n in range(ensambles))),
                                        total=ensambles))
