@@ -71,23 +71,24 @@ def swir(n, z, rho0, kappa, mu, eta):
         # actualiza la lista de los nuevos infectados para el paso de tiempo n+1
         I = [s for sublist in new_infected_n for s in sublist]
         np.random.shuffle(I)
-    return np.array(estado.get_array(), dtype=np.uint8)
+    magnetisation = np.count_nonzero(estado.get_array()==3)/estado.get_array().size
+    return magnetisation
 
 
 
 N = 1000000
 def worker_function(num_ensamble, N):
     kappa_range = (np.linspace(-1, 1, 20))**3
-    max_new = 0.108021+0.003
-    min_new = 0.108021-0.003
+    max_new = 0.115+0.003
+    min_new = 0.115-0.003
     kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
     results = []
     for kappa in kappa_range:
-        results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5))
-    with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
+        results.append(swir(N, 8, 2e-3, kappa, kappa, 0.5))
+    with open('./results/{0}_{1}_rho_sub_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 1000
+ensambles = 2000
 with Pool(64) as pool:
-    results = list(tqdm.tqdm(pool.imap(worker_function, range(ensambles), (N for n in range(ensambles))),
+    results = list(tqdm.tqdm(pool.imap(worker_function, range(1000, ensambles + 1000), (N for n in range(ensambles))),
                                        total=ensambles))
