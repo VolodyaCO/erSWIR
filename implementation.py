@@ -96,7 +96,8 @@ def swir(n, z, rho0, kappa, mu, eta):
 def worker_function_2(num_ensamble):
     kappa_sub = 0.11495
     rho_0_sub = 2e-3
-    N_range = [int(n) for n in np.geomspace(1e5, 5e7, 10)]
+    N_range = [int(n) for n in np.geomspace(1e5, 3e6, 10)]
+    np.random.shuffle(N_range)
     results = []
     for N in N_range:
         results.append(swir(N, 8, rho_0_sub, kappa_sub, kappa_sub, 0.5))
