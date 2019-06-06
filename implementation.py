@@ -104,6 +104,6 @@ def worker_function_2(num_ensamble):
     with open('./results/{0}_fig7_rho_sub_critical.p'.format(num_ensamble), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 1000
+ensambles = 5000
 with Pool(64) as pool:
-    results = list(tqdm.tqdm(pool.imap(worker_function_2, range(ensambles)), total=ensambles))
+    results = list(tqdm.tqdm(pool.imap(worker_function_2, range(1000, ensambles + 1000)), total=ensambles))
