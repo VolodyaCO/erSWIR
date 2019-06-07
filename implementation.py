@@ -96,14 +96,15 @@ def swir(n, z, rho0, kappa, mu, eta):
 def worker_function_2(num_ensamble):
     kappa_sub = 0.11495
     rho_0_sub = 2e-3
-    N_range = [int(n) for n in np.geomspace(1e5, 3e6, 10)]
+    #N_range = [int(n) for n in np.geomspace(1e5, 3e6, 10)]
+    N_range = [ 100000,  145923,  212936, 310723]
     np.random.shuffle(N_range)
     results = []
     for N in N_range:
         results.append(swir(N, 8, rho_0_sub, kappa_sub, kappa_sub, 0.5))
-    with open('./results/{0}_fig7_rho_sub_critical.p'.format(num_ensamble), "wb") as f:
+    with open('./results/{0}_fig7_rho_sub_critical_test.p'.format(num_ensamble), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 5000
+ensambles = 65000
 with Pool(64) as pool:
-    results = list(tqdm.tqdm(pool.imap(worker_function_2, range(1000, ensambles + 1000)), total=ensambles))
+    results = list(tqdm.tqdm(pool.imap(worker_function_2, range(ensambles)), total=ensambles))
