@@ -7,13 +7,14 @@ from pathos.multiprocessing import ProcessingPool as Pool
 import tqdm
 import pickle
 
-def swir(n, z, rho0, kappa, mu, eta):
+def swir(n, z, rho0, kappa, mu, eta, num_ensamble):
     pER = z/n
     ss = 1 - mu - kappa
     ww = 1 - eta
+    np.random.seed(num_ensamble)
     
     # inicialización del grafo erdos renyi
-    g = random_graph(n, lambda: np.random.poisson((n-1) * pER), directed=False, model="erdos")
+    g = random_graph(n, lambda: np.random.poisson((n-1) * pER), directed=False, model="erdos", random=True)
 
     # declarar una propiedad llamada "estado" que va a guardar el estado de cada nodo
     estado = g.new_vertex_property("short")
@@ -101,10 +102,10 @@ def worker_function_2(num_ensamble):
     np.random.shuffle(N_range)
     results = []
     for N in N_range:
-        results.append(swir(N, 8, rho_0_sub, kappa_sub, kappa_sub, 0.5))
-    with open('./results/{0}_fig7_rho_sub_critical_test.p'.format(num_ensamble), "wb") as f:
+        results.append(swir(N, 8, rho_0_sub, kappa_sub, kappa_sub, 0.5, num_ensamble))
+    with open('./results/{0}_fig7_rho_sub_critical_test_2.p'.format(num_ensamble), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 65000
+ensambles = 3000
 with Pool(64) as pool:
     results = list(tqdm.tqdm(pool.imap(worker_function_2, range(ensambles)), total=ensambles))
