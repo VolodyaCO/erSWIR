@@ -11,7 +11,9 @@ def swir(n, z, rho0, kappa, mu, eta, num_ensamble):
     pER = z/n
     ss = 1 - mu - kappa
     ww = 1 - eta
+    
     np.random.seed(num_ensamble)
+    seed_rng(num_ensamble)
     
     # inicialización del grafo erdos renyi
     g = random_graph(n, lambda: np.random.poisson((n-1) * pER), directed=False, model="erdos", random=True)
