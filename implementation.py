@@ -79,40 +79,40 @@ def swir(n, z, rho0, kappa, mu, eta, num_ensamble):
 
 
 
-# N = 1000000
-# def worker_function(num_ensamble, N):
-#     kappa_range = (np.linspace(-1, 1, 20))**3
-#     max_new = 0.115+0.003
-#     min_new = 0.115-0.003
-#     kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
-#     results = []
-#     for kappa in kappa_range:
-#         results.append(swir(N, 8, 2e-3, kappa, kappa, 0.5))
-#     with open('./results/{0}_{1}_rho_sub_critical.p'.format(num_ensamble, N), "wb") as f:
-#         pickle.dump(results, f)
-
-# ensambles = 2000
-# with Pool(64) as pool:
-#     results = list(tqdm.tqdm(pool.imap(worker_function, range(1000, ensambles + 1000), (N for n in range(ensambles))),
-#                                        total=ensambles))
-
-def worker_function_2(num_ensamble):
-    kappa_sub = 0.115023
-    rho_0_sub = 2e-3
-    kappa_c =  0.108021
-    rho_0_c =  0.00747762
-
-    #N_range = [int(n) for n in np.geomspace(1e5, 3e6, 10)]
-    N_range = [ 100000,  145923,  212936, 310723]
-    np.random.shuffle(N_range)
+N = 50000
+def worker_function(num_ensamble, N):
+    kappa_range = (np.linspace(-1, 1, 20))**3
+    max_new = 0.108021+0.003
+    min_new = 0.108021-0.003
+    kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
     results = []
-    for N in N_range:
-        #results.append(swir(N, 8, rho_0_sub, kappa_sub, kappa_sub, 0.5, num_ensamble))
-        results.append(swir(N, 8, rho_0_c, kappa_c, kappa_c, 0.5, num_ensamble))
-
-    with open('./results/{0}_fig7_rho_critical.p'.format(num_ensamble), "wb") as f:
+    for kappa in kappa_range:
+        results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5))
+    with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(results, f)
 
-ensambles = 32000
+ensambles = 20000
 with Pool(64) as pool:
-    results = list(tqdm.tqdm(pool.imap(worker_function_2, range(ensambles)), total=ensambles))
+    results = list(tqdm.tqdm(pool.imap(worker_function, range(ensambles), (N for n in range(ensambles))),
+                                       total=ensambles))
+
+# def worker_function_2(num_ensamble):
+#     kappa_sub = 0.115023
+#     rho_0_sub = 2e-3
+#     kappa_c =  0.108021
+#     rho_0_c =  0.00747762
+
+#     #N_range = [int(n) for n in np.geomspace(1e5, 3e6, 10)]
+#     N_range = [ 100000,  145923,  212936, 310723]
+#     np.random.shuffle(N_range)
+#     results = []
+#     for N in N_range:
+#         #results.append(swir(N, 8, rho_0_sub, kappa_sub, kappa_sub, 0.5, num_ensamble))
+#         results.append(swir(N, 8, rho_0_c, kappa_c, kappa_c, 0.5, num_ensamble))
+
+#     with open('./results/{0}_fig7_rho_critical.p'.format(num_ensamble), "wb") as f:
+#         pickle.dump(results, f)
+
+# ensambles = 32000
+# with Pool(64) as pool:
+#     results = list(tqdm.tqdm(pool.imap(worker_function_2, range(ensambles)), total=ensambles))
