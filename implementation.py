@@ -79,22 +79,22 @@ def swir(n, z, rho0, kappa, mu, eta, num_ensamble):
 
 
 
-N = 50000
-def worker_function(num_ensamble, N):
-    kappa_range = (np.linspace(-1, 1, 20))**3
-    max_new = 0.108021+0.003
-    min_new = 0.108021-0.003
-    kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
-    results = []
-    for kappa in kappa_range:
-        results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5, num_ensamble))
-    with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
-        pickle.dump(results, f)
+# N = 50000
+# def worker_function(num_ensamble, N):
+#     kappa_range = (np.linspace(-1, 1, 20))**3
+#     max_new = 0.108021+0.003
+#     min_new = 0.108021-0.003
+#     kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
+#     results = []
+#     for kappa in kappa_range:
+#         results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5, num_ensamble))
+#     with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
+#         pickle.dump(results, f)
 
-ensambles = 20000
-with Pool(64) as pool:
-    results = list(tqdm.tqdm(pool.imap(worker_function, range(ensambles), (N for n in range(ensambles))),
-                                       total=ensambles))
+# ensambles = 20000
+# with Pool(64) as pool:
+#     results = list(tqdm.tqdm(pool.imap(worker_function, range(ensambles), (N for n in range(ensambles))),
+#                                        total=ensambles))
 
 # def worker_function_2(num_ensamble):
 #     kappa_sub = 0.115023
@@ -116,3 +116,18 @@ with Pool(64) as pool:
 # ensambles = 32000
 # with Pool(64) as pool:
 #     results = list(tqdm.tqdm(pool.imap(worker_function_2, range(ensambles)), total=ensambles))
+
+def worker_function_3(num_ensamble, N):
+    kappa_sub = 0.115023
+    rho_0_sub = 2e-3
+    kappa_c =  0.108021
+    rho_0_c =  0.00747762
+    r = swir(N, 8, rho_0_c, kappa_c, kappa_c, 0.5, num_ensamble)
+    with open('./results/{0}_{0}_fig10_rho_critical.p'.format(num_ensamble, N), "wb") as f:
+        pickle.dump(r, f)
+
+N_range = [ 100000,  145923,  212936, 310723]
+ensambles = 1000
+for N in N_range:
+    with Pool(64) as pool:
+        results = list(tqdm.tqdm(pool.imap(worker_function_3, range(ensambles), [N]*ensambles)), total=ensambles)
