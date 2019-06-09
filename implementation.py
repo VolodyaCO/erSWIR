@@ -123,11 +123,13 @@ def worker_function_3(num_ensamble, N):
     kappa_c =  0.108021
     rho_0_c =  0.00747762
     r = swir(N, 8, rho_0_c, kappa_c, kappa_c, 0.5, num_ensamble)
-    with open('./results/{0}_{0}_fig10_rho_critical.p'.format(num_ensamble, N), "wb") as f:
+    with open('./results/{0}_{1}_fig10_rho_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(r, f)
 
-N_range = [ 100000,  145923,  212936, 310723]
+N_range = [ 100000,  145923]#,  212936, 310723]
 ensambles = 1000
 for N in N_range:
     with Pool(64) as pool:
         results = list(tqdm.tqdm(pool.imap(worker_function_3, range(ensambles), [N]*ensambles), total=ensambles))
+
+
