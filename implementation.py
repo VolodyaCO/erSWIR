@@ -130,4 +130,4 @@ N_range = [ 100000,  145923,  212936, 310723]
 ensambles = 1000
 for N in N_range:
     with Pool(64) as pool:
-        results = list(tqdm.tqdm(pool.imap(worker_function_3, range(ensambles), [N]*ensambles)), total=ensambles)
+        results = list(tqdm.tqdm(pool.imap(worker_function_3, range(ensambles), [N]*ensambles), total=ensambles))
