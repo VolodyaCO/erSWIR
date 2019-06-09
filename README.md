@@ -45,3 +45,7 @@ kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_ne
 * samples: 32k -> n
 * name: `"results/{0}_fig10_rho_critical.p".format(n)`
 `N_range = [ 100000,  145923,  212936, 310723]`
+### 7
+* samples: 1000 -> n (for each N)
+* nodes: 100000,  145923,  212936, 310723 -> N
+* name: `'./results/{0}_{0}_fig10_rho_critical.p'.format(num_ensamble, N)`
