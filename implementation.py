@@ -87,7 +87,7 @@ def worker_function(num_ensamble, N):
     kappa_range = (kappa_range-kappa_range.min()) * (max_new - min_new) / 2 + min_new
     results = []
     for kappa in kappa_range:
-        results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5))
+        results.append(swir(N, 8, 0.00747762, kappa, kappa, 0.5, num_ensamble))
     with open('./results/{0}_{1}_rho_critical.p'.format(num_ensamble, N), "wb") as f:
         pickle.dump(results, f)
 
